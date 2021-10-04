@@ -37,3 +37,28 @@ stages:
         command: 'Push an image'
         imageName: '$(ImageName)'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+  
+- stage: Deploy
+  displayName: Deploy
+  jobs:  
+  - job: Deploy
+    displayName: Deploy to kubernetes
+    steps:
+    - task: KubectlInstaller@0
+      displayName: 'Build the Docker image'
+      inputs:
+        kubectlVersion: 'latest'    
+    
+     
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'dagile-lohith-name'
+        namespace: 'lohith-name'
+        command: 'create'
+        useConfigurationFile: true
+        configuration: 'checkoutservice.yaml'
+        secretType: 'dockerRegistry'
+        containerRegistryType: 'Azure Container Registry'
+        azureSubscriptionEndpointForSecrets: 'DAgility (44e26024-4977-4419-8d23-0e1e22e8804e)'
+        azureContainerRegistry: 'dagile.azurecr.io'
