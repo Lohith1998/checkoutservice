@@ -55,7 +55,7 @@ stages:
         connectionType: 'Kubernetes Service Connection'
         kubernetesServiceEndpoint: 'dagile-lohith-name'
         namespace: 'lohith-name'
-        command: 'create'
+        command: 'apply'
         useConfigurationFile: true
         configuration: 'checkoutservice.yaml'
         secretType: 'dockerRegistry'
